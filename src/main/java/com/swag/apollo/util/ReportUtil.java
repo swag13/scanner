@@ -57,10 +57,10 @@ public class ReportUtil {
    				"<tr><th>Type</th><th>Title</th><th>Description</th><th>File</th><th>Element</th><th>Severity</th><th>Score</th></tr>");
 
    		for (RuleViolation v : violations) {
-   			html.append("<tr>").append("<td>").append(v.getTitle()).append("</td>").append("<td>").append(v.getDescription())
+   			html.append("<tr>").append("<td>").append(v.getType()).append("</td>").append("<td>").append(v.getTitle())
    					.append("</td>").append("<td>").append(v.getDescription()).append("</td>").append("<td>")
    					.append(v.getFilePath() == null ? "N/A" : v.getFilePath()).append("</td>").append("<td>")
-   					.append(v.getType() == null ? "N/A" : v.getType()).append("</td>").append("<td>")
+   					.append(v.getElementName() == null ? "N/A" : v.getElementName()).append("</td>").append("<td>")
    					.append(v.getSeverity()).append("</td>").append("<td>").append(v.getScore()).append("</td>").append("</tr>");
    		}
    		html.append("</table>");
