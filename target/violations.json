@@ -1,0 +1,65 @@
+[
+  {
+    "type": "OCP",
+    "title": "Open/Closed Principle Violation",
+    "description": "Use of instanceof or role-based conditional logic found.",
+    "filePath": "D:\\GIT\\spring-boot-rest-api-antipatterns\\src\\main\\java\\com\\swag\\myapp\\entities\\AccessChecker.java",
+    "elementName": "IfStmt",
+    "severity": "MEDIUM",
+    "score": 20
+  },
+  {
+    "type": "SRP",
+    "title": "Single Responsibility Violation",
+    "description": "Class Person has 14 methods and 7 fields.",
+    "filePath": "D:\\GIT\\spring-boot-rest-api-antipatterns\\src\\main\\java\\com\\swag\\myapp\\entities\\Person.java",
+    "elementName": "Person",
+    "severity": "MEDIUM",
+    "score": 21
+  },
+  {
+    "type": "ISP",
+    "title": "Interface Segregation Violation",
+    "description": "Interface Person has too many methods.",
+    "filePath": "D:\\GIT\\spring-boot-rest-api-antipatterns\\src\\main\\java\\com\\swag\\myapp\\entities\\Person.java",
+    "elementName": "Person",
+    "severity": "LOW",
+    "score": 15
+  },
+  {
+    "type": "LSP",
+    "title": "Liskov Substitution Violation",
+    "description": "Method process throws UnsupportedOperationException.",
+    "filePath": "D:\\GIT\\spring-boot-rest-api-antipatterns\\src\\main\\java\\com\\swag\\myapp\\LegacySubClass.java",
+    "elementName": "process",
+    "severity": "HIGH",
+    "score": 25
+  },
+  {
+    "type": "DIP",
+    "title": "Dependency Inversion Violation",
+    "description": "Direct instantiation of concrete class: EmailServiceImpl",
+    "filePath": "D:\\GIT\\spring-boot-rest-api-antipatterns\\src\\main\\java\\com\\swag\\myapp\\models\\UserHandler.java",
+    "elementName": "EmailServiceImpl",
+    "severity": "HIGH",
+    "score": 30
+  },
+  {
+    "type": "SRP",
+    "title": "Single Responsibility Violation",
+    "description": "Class OrderManager has 22 methods and 25 fields.",
+    "filePath": "D:\\GIT\\spring-boot-rest-api-antipatterns\\src\\main\\java\\com\\swag\\myapp\\services\\OrderManager.java",
+    "elementName": "OrderManager",
+    "severity": "MEDIUM",
+    "score": 47
+  },
+  {
+    "type": "ISP",
+    "title": "Interface Segregation Violation",
+    "description": "Interface OrderManager has too many methods.",
+    "filePath": "D:\\GIT\\spring-boot-rest-api-antipatterns\\src\\main\\java\\com\\swag\\myapp\\services\\OrderManager.java",
+    "elementName": "OrderManager",
+    "severity": "LOW",
+    "score": 15
+  }
+]
