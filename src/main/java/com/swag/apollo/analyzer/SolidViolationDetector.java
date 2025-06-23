@@ -12,6 +12,8 @@ import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.expr.ObjectCreationExpr;
+import com.github.javaparser.ast.expr.StringLiteralExpr;
+import com.github.javaparser.ast.stmt.CatchClause;
 import com.github.javaparser.ast.stmt.IfStmt;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 import com.swag.apollo.RuleViolation;
@@ -48,6 +50,12 @@ public class SolidViolationDetector {
                 cu.accept(new LSPVisitor(file.getPath()), null);
                 cu.accept(new ISPVisitor(file.getPath()), null);
                 cu.accept(new DIPVisitor(file.getPath()), null);
+                
+                // Add more visitors for Design Patterns anomaly as needed
+				cu.accept(new ManualDIVisitor(file.getPath()), null);
+				cu.accept(new CatchBlockLoggingVisitor(file.getPath()), null);
+				cu.accept(new SensitiveDataLoggingVisitor(file.getPath()), null);
+			
             }
         }
     }
@@ -142,4 +150,65 @@ public class SolidViolationDetector {
             }
         }
     }
+    
+    class ManualDIVisitor extends com.github.javaparser.ast.visitor.VoidVisitorAdapter<Void> {
+		private final String file;
+		ManualDIVisitor(String file) { this.file = file; }
+
+		@Override
+		public void visit(ObjectCreationExpr expr, Void arg) {
+			if (expr.getType().getNameAsString().endsWith("ServiceImpl")) {
+				violations.add(new RuleViolation(
+						"NO_DI",
+						"Manual Dependency Instantiation",
+						"Avoid using `new` for service instantiation inside Spring beans.",
+						file,
+						expr.getType().asString(),
+						"HIGH",
+						30
+						));
+			}
+		}
+	}
+
+	class CatchBlockLoggingVisitor extends com.github.javaparser.ast.visitor.VoidVisitorAdapter<Void> {
+		private final String file;
+		CatchBlockLoggingVisitor(String file) { this.file = file; }
+
+		@Override
+		public void visit(CatchClause catchClause, Void arg) {
+			if (!catchClause.getBody().toString().contains("log")) {
+				violations.add(new RuleViolation(
+						"NO_LOG_IN_CATCH",
+						"Missing Logging in Catch Block",
+						"Exception caught but not logged.",
+						file,
+						catchClause.getParameter().getNameAsString(),
+						"HIGH",
+						35
+						));
+			}
+		}
+	}
+
+	class SensitiveDataLoggingVisitor extends com.github.javaparser.ast.visitor.VoidVisitorAdapter<Void> {
+		private final String file;
+		SensitiveDataLoggingVisitor(String file) { this.file = file; }
+
+		@Override
+		public void visit(StringLiteralExpr expr, Void arg) {
+			String value = expr.asString().toLowerCase();
+			if (value.contains("password") || value.contains("secret") || value.contains("token")) {
+				violations.add(new RuleViolation(
+						"SENSITIVE_LOG",
+						"Sensitive Data in Log Statement",
+						"Logging may expose sensitive information: `" + expr.asString() + "`",
+						file,
+						expr.asString(),
+						"HIGH",
+						40
+						));
+			}
+		}
+	}
 }

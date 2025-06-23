@@ -27,6 +27,15 @@
     "score": 15
   },
   {
+    "type": "SENSITIVE_LOG",
+    "title": "Sensitive Data in Log Statement",
+    "description": "Logging may expose sensitive information: `Password is required`",
+    "filePath": "D:\\GIT\\spring-boot-rest-api-antipatterns\\src\\main\\java\\com\\swag\\myapp\\entities\\Person.java",
+    "elementName": "Password is required",
+    "severity": "HIGH",
+    "score": 40
+  },
+  {
     "type": "LSP",
     "title": "Liskov Substitution Violation",
     "description": "Method process throws UnsupportedOperationException.",
@@ -39,6 +48,15 @@
     "type": "DIP",
     "title": "Dependency Inversion Violation",
     "description": "Direct instantiation of concrete class: EmailServiceImpl",
+    "filePath": "D:\\GIT\\spring-boot-rest-api-antipatterns\\src\\main\\java\\com\\swag\\myapp\\models\\UserHandler.java",
+    "elementName": "EmailServiceImpl",
+    "severity": "HIGH",
+    "score": 30
+  },
+  {
+    "type": "NO_DI",
+    "title": "Manual Dependency Instantiation",
+    "description": "Avoid using `new` for service instantiation inside Spring beans.",
     "filePath": "D:\\GIT\\spring-boot-rest-api-antipatterns\\src\\main\\java\\com\\swag\\myapp\\models\\UserHandler.java",
     "elementName": "EmailServiceImpl",
     "severity": "HIGH",
