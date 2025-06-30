@@ -7,8 +7,6 @@ import java.util.List;
 
 import org.json.JSONObject;
 
-import com.swag.apollo.RuleViolation;
-
 public class RiskReportGenerator {
 	    public static void generateReport(List<RuleViolation> violations, int score) throws IOException {
 	        JSONObject report = new JSONObject();

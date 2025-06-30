@@ -45,6 +45,15 @@
     "score": 25
   },
   {
+    "type": "SENSITIVE_LOG",
+    "title": "Sensitive Data in Log Statement",
+    "description": "Logging may expose sensitive information: `, password\u003d\u0027`",
+    "filePath": "D:\\GIT\\spring-boot-rest-api-antipatterns\\src\\main\\java\\com\\swag\\myapp\\models\\LoginRequest.java",
+    "elementName": ", password\u003d\u0027",
+    "severity": "HIGH",
+    "score": 40
+  },
+  {
     "type": "DIP",
     "title": "Dependency Inversion Violation",
     "description": "Direct instantiation of concrete class: EmailServiceImpl",
@@ -79,5 +88,14 @@
     "elementName": "OrderManager",
     "severity": "LOW",
     "score": 15
+  },
+  {
+    "type": "NO_LOG_IN_CATCH",
+    "title": "Missing Logging in Catch Block",
+    "description": "Exception caught but not logged.",
+    "filePath": "D:\\GIT\\spring-boot-rest-api-antipatterns\\src\\main\\java\\com\\swag\\myapp\\services\\OrderService.java",
+    "elementName": "e",
+    "severity": "HIGH",
+    "score": 35
   }
 ]

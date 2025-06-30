@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.swag.apollo.RuleViolation;
 
 public class ReportUtil {
 

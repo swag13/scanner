@@ -2,8 +2,6 @@ package com.swag.apollo.util;
 
 import java.util.List;
 
-import com.swag.apollo.RuleViolation;
-
 public class RiskScorer {
 	    public static int calculate(List<RuleViolation> violations) {
 	        int score = 0;
