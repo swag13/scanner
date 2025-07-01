@@ -1,63 +1,49 @@
 package com.swag.apollo;
 
-import java.io.IOException;
-
 import com.swag.apollo.analyzer.JavaRiskAnalyzer;
 import com.swag.apollo.analyzer.ReactRiskAnalyzer;
 
+import java.io.IOException;
+
 public class Main {
-	//public static void main(String[] args) {
-		/*
-		 * String compiledPath = "target/classes"; String basePackage = "com.example";
-		 * // update to your base package
-		 * 
-		 * List<RuleViolation> violations = ArchitectureAnalyzer.analyze(compiledPath,
-		 * basePackage);
-		 * 
-		 * if (violations.isEmpty()) {
-		 * System.out.println("✅ No structural issues found."); } else {
-		 * System.out.println("🚨 Violations:");
-		 * violations.forEach(System.out::println); }
-		 */
 
-	    public static void main(String[] args) {
-	        analyzeJavaRepo();
-	        analyzeReactRepo();
+    public static void main(String[] args) {
+        if (args.length < 2) {
+            System.err.println("Usage: java -jar scanner.jar <language> <directory>");
+            System.err.println("Example: java -jar scanner.jar java /repo/src/main/java");
+            System.exit(1);
+        }
 
-	        
-	        // Optionally, you can save the violations to a file or database
-	        
-	       
-	    }
+        String language = args[0];
+        String directory = args[1];
+        int riskScore = 0;
 
-		private static void analyzeReactRepo() {
-			String basePackage = "../react-project"; // Change this to your base app package
+        try {
+            switch (language.toLowerCase()) {
+                case "java":
+                    riskScore = JavaRiskAnalyzer.analyzeAndScore(directory);
+                    break;
+                case "react":
+                    ReactRiskAnalyzer.analyzeAndScore(directory);
+                    break;
+                default:
+                    System.err.println("❌ Unsupported language: " + language);
+                    System.exit(1);
+            }
 
-			try {
-				ReactRiskAnalyzer.analyzeAndScore(basePackage);
-			} catch (IOException e) {
-				System.err.println("Error analyzing React code: " + e.getMessage());
-			}
-			
-		}
+            System.out.println("🧠 Total Risk Score: " + riskScore);
+            if (riskScore >= 200) {
+                System.out.println("❌ Merge blocked due to high risk.");
+                System.exit(1); // Fail the pipeline
+            } else if (riskScore > 100) {
+                System.out.println("⚠ Moderate risk. Review recommended.");
+            } else {
+                System.out.println("✅ Codebase is AI-ready.");
+            }
 
-		private static void analyzeJavaRepo() {
-			String basePackage = "com.swag.myapp"; // Change this to your base app package
-
-	        int riskScore;
-			try {
-				riskScore = JavaRiskAnalyzer.analyzeAndScore(basePackage);
-				if (riskScore >= 50) {
-		            System.out.println("❗ High architectural risk. Refactoring recommended.");
-		        } else if (riskScore > 0) {
-		            System.out.println("⚠ Medium risk. Monitor and refactor selectively.");
-		        } else {
-		            System.out.println("✅ Code structure looks clean.");
-		        }
-		        
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
+        } catch (IOException e) {
+            System.err.println("❌ Error during scanning: " + e.getMessage());
+            System.exit(1);
+        }
+    }
 }
