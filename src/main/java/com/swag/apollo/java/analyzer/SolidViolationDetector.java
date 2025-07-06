@@ -75,7 +75,7 @@ public class SolidViolationDetector {
             if (methodCount > 10 || fieldCount > 8) {
                 violations.add(new RuleViolation("SRP", "Single Responsibility Violation",
                     "Class " + c.getNameAsString() + " has " + methodCount + " methods and " + fieldCount + " fields.",
-                    file, c.getNameAsString(), "MEDIUM", methodCount + fieldCount));
+                    file, c.getNameAsString(), "MEDIUM", methodCount + fieldCount, "Design Pattern"));
             }
         }
     }
@@ -92,7 +92,7 @@ public class SolidViolationDetector {
             if (stmt.toString().contains("instanceof") || stmt.toString().contains("getRole()")) {
                 violations.add(new RuleViolation("OCP", "Open/Closed Principle Violation",
                     "Use of instanceof or role-based conditional logic found.",
-                    file, "IfStmt", "MEDIUM", 20));
+                    file, "IfStmt", "MEDIUM", 20, "Design Pattern"));
             }
         }
     }
@@ -110,7 +110,7 @@ public class SolidViolationDetector {
                 if (body.toString().contains("UnsupportedOperationException")) {
                     violations.add(new RuleViolation("LSP", "Liskov Substitution Violation",
                         "Method " + method.getNameAsString() + " throws UnsupportedOperationException.",
-                        file, method.getNameAsString(), "HIGH", 25));
+                        file, method.getNameAsString(), "HIGH", 25, "Design Pattern"));
                 }
             });
         }
@@ -128,7 +128,7 @@ public class SolidViolationDetector {
             if (iface.getMethods().size() > 8) {
                 violations.add(new RuleViolation("ISP", "Interface Segregation Violation",
                     "Interface " + iface.getNameAsString() + " has too many methods.",
-                    file, iface.getNameAsString(), "LOW", 15));
+                    file, iface.getNameAsString(), "LOW", 15, "Design Pattern"));
             }
         }
     }
@@ -146,7 +146,7 @@ public class SolidViolationDetector {
             if (type.endsWith("Impl")) {
                 violations.add(new RuleViolation("DIP", "Dependency Inversion Violation",
                     "Direct instantiation of concrete class: " + type,
-                    file, type, "HIGH", 30));
+                    file, type, "HIGH", 30, "Design Pattern"));
             }
         }
     }
@@ -165,7 +165,7 @@ public class SolidViolationDetector {
 						file,
 						expr.getType().asString(),
 						"HIGH",
-						30
+						30, "Design Pattern"
 						));
 			}
 		}
@@ -185,7 +185,7 @@ public class SolidViolationDetector {
 						file,
 						catchClause.getParameter().getNameAsString(),
 						"HIGH",
-						35
+						35, "Observability"
 						));
 			}
 		}
@@ -206,7 +206,7 @@ public class SolidViolationDetector {
 						file,
 						expr.asString(),
 						"HIGH",
-						40
+						40, "Security"
 						));
 			}
 		}
